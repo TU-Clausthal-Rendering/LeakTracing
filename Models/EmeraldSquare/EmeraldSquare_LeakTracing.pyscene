@@ -1,0 +1,43 @@
+# Load scene
+sceneBuilder.importScene("EmeraldSquare_Day.fbx")
+
+for c in sceneBuilder.cameras:
+	c.nearPlane = 0.1
+	c.farPlane = 800.0
+
+sun = sceneBuilder.getLight("Day")
+sun.intensity = float3(1.0,0.7803,0.6667) * 15
+
+sceneBuilder.removeLight("pointLight1")
+
+#Make grass non shadow throwable
+grass = sceneBuilder.getMaterial("Grass_blades.DoubleSided")
+grass.castShadow = False
+
+floor = sceneBuilder.getMaterial("Floor")
+floor.doubleSided = True
+#floor.castShadow = False
+
+#worldGrid = sceneBuilder.getMaterial("WorldGridMaterial")
+#worldGrid = floor
+
+#Fix DoubleSided Materials
+tree = sceneBuilder.getMaterial("JapaneseMapleLeaf_1.DoubleSided4")
+tree.doubleSided = True
+tree = sceneBuilder.getMaterial("JapaneseMapleLeaf_2.DoubleSided4")
+tree.doubleSided = True
+
+leaves = sceneBuilder.getMaterial("Pink_Flower.DoubleSided1")
+leaves.doubleSided = True
+leaves = sceneBuilder.getMaterial("Azalea_Leaves_2.DoubleSided1")
+leaves.doubleSided = True
+leaves = sceneBuilder.getMaterial("Azalea_Leaves_1.DoubleSided1")
+leaves.doubleSided = True
+
+banner = sceneBuilder.getMaterial("PoleBanner_1")
+banner.doubleSided = True
+
+
+
+# Set environment map
+sceneBuilder.envMap = EnvMap("symmetrical_garden_4k.hdr")

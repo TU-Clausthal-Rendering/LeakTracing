@@ -1,0 +1,44 @@
+# Load scene
+sceneBuilder.importScene("BistroExterior.fbx")
+
+#Add double Sided Materials flag to doubleSided materials´
+metailRailing = sceneBuilder.getMaterial("MASTER_Forge_Metal")
+metailRailing.doubleSided = True
+
+grainMetal = sceneBuilder.getMaterial("MASTER_Grain_Metal")
+grainMetal.doubleSided = True
+
+concrete = sceneBuilder.getMaterial("MASTER_Concrete")
+concrete.doubleSided = True
+
+buildingDetails = sceneBuilder.getMaterial("MASTER_Building_Details")
+buildingDetails.doubleSided = True
+
+flowers = sceneBuilder.getMaterial("Foliage_Paris_Flowers")
+flowers.doubleSided = True
+
+chains = sceneBuilder.getMaterial("Streetlight_Chains")
+chains.doubleSided = True
+
+#Add a test camera for time measurements
+testCam = Camera("TestCam")
+testCam.position = float3(-28.9589, 6.4097, -7.5735)
+testCam.target = float3(-28.0067, 6.2827, -7.2957)
+testCam.up = float3(0, 1, 0)
+testCam.focalLength = 35.0
+testCam.nearPlane = 0.1
+testCam.farPlane =  300.0
+sceneBuilder.addCamera(testCam)
+
+sceneBuilder.removeLight("directionalLight1")
+
+sun = DirectionalLight("Sun")
+sun.intensity = float3(1.0, 0.7921 ,0.5137) * 20.0
+#sun.direction = float3(-0.000,-0.876,-0.482)	#Original Direction
+sun.direction = float3(-0.1,-0.864,-0.493)		#More visible errors
+sceneBuilder.addLight(sun)
+
+
+#Load environment map
+sceneBuilder.envMap = EnvMap("san_giuseppe_bridge_4k.hdr")
+sceneBuilder.envMap.intensity = 1
