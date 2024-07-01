@@ -9,7 +9,7 @@ This prototype implements Leak Tracing, a hybrid algorithm that combines filtera
 
 This project was implemented using NVIDIA's Falcor rendering framework. See [README_Falcor.md](README_Falcor.md) for the readme provided with Falcor.
 
-You can download the executable demo from the [Releases Page](https://github.com/TU-Clausthal-Rendering/LeakTracing/releases/tag/0.9), or build the project by following the instructions in [Building Falcor](#building-falcor) or the build instructions in the original [readme](README_Falcor.md).
+You can download the executable demo from the [Releases Page](https://github.com/TU-Clausthal-Rendering/LeakTracing/releases/latest), or build the project by following the instructions in [Building Falcor](#building-falcor) or the build instructions in the original [readme](README_Falcor.md).
 
 Teaser:
 
