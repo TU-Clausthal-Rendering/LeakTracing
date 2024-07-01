@@ -985,12 +985,9 @@ void ShadowMap::rasterCubeEachFace(uint index, ref<Light> light, RenderContext* 
         {
             float4 clearColor = float4(1.f);
             if (mShadowMapType == ShadowMapType::Exponential)
-                clearColor.x = exp(mExponentialSMConstant); //Set to highest possible
+                clearColor.x = FLT_MAX; // Set to highest possible
             else if (mShadowMapType == ShadowMapType::ExponentialVariance)
-            {
-                float2 expVarMax = float2(exp(mEVSMConstant), -exp(-mEVSMNegConstant)); 
-                clearColor = float4(expVarMax.x, expVarMax.x * expVarMax.x, expVarMax.y, expVarMax.y * expVarMax.y); // Set to highest possible
-            }
+                clearColor = float4(FLT_MAX, FLT_MAX, 0.f, FLT_MAX); // Set to highest possible
                 
             pRenderContext->clearFbo(mShadowCubeRasterPass.pState->getFbo().get(), clearColor, 1.f, 0);
         }
@@ -1096,12 +1093,10 @@ bool ShadowMap::rasterSpotLight(uint index, ref<Light> light, RenderContext* pRe
         // Clear
         float4 clearColor = float4(1.f);
         if (mShadowMapType == ShadowMapType::Exponential)
-            clearColor.x = exp(mExponentialSMConstant); // Set to highest possible
+            clearColor.x = FLT_MAX; // Set to highest possible
         else if (mShadowMapType == ShadowMapType::ExponentialVariance)
-        {
-            float2 expVarMax = float2(exp(mEVSMConstant), -exp(-mEVSMNegConstant));
-            clearColor = float4(expVarMax.x, expVarMax.x * expVarMax.x, expVarMax.y, expVarMax.y * expVarMax.y); // Set to highest possible
-        }
+            clearColor = float4(FLT_MAX, FLT_MAX, 0.f, FLT_MAX);  // Set to highest possible
+
         pRenderContext->clearFbo(mShadowMapRasterPass.pState->getFbo().get(), clearColor, 1.f, 0);
 
         if (mUseFrustumCulling)
@@ -1422,12 +1417,9 @@ bool ShadowMap::rasterCascaded(ref<Light> light, RenderContext* pRenderContext, 
 
         float4 clearColor = float4(1.f);
         if (mShadowMapType == ShadowMapType::Exponential)
-            clearColor.x = exp(mExponentialSMConstant); // Set to highest possible
+            clearColor.x = FLT_MAX; // Set to highest possible
         else if (mShadowMapType == ShadowMapType::ExponentialVariance)
-        {
-            float2 expVarMax = float2(exp(mEVSMConstant), -exp(-mEVSMNegConstant));
-            clearColor = float4(expVarMax.x, expVarMax.x * expVarMax.x, expVarMax.y, expVarMax.y * expVarMax.y); // Set to highest possible
-        }
+            clearColor = float4(FLT_MAX, FLT_MAX, 0.f, FLT_MAX);                                                 // Set to highest possible
 
         //Clear
         if (mpDepthCascaded)
@@ -1776,8 +1768,8 @@ bool ShadowMap::renderUILeakTracing(Gui::Widgets& widget, bool leakTracingEnable
                 group.text("Hybrid Shadows (AMD FideletyFX) with 2x2 PCF used!. LTT Mask settings still apply");
             }
             bool biasChanged = false;
-            biasChanged |= group.var("Bias", mBias, 0, 256, 1);
-            biasChanged |= group.var("Slope Bias", mSlopeBias, 0.f, 50.f, 0.001f);
+            biasChanged |= group.var("Bias", mBias, 0, 2048, 1);
+            biasChanged |= group.var("Slope Bias", mSlopeBias, 0.f, 400.f, 0.001f);
 
             if (biasChanged)
             {

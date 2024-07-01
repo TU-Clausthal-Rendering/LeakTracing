@@ -419,17 +419,17 @@ void rayGen()
             if (lttProps.clampShadow && !useRay)
                 rtShadow = shadow < 0.5 ? 0.f : 1.f;
 
-            if(kEnableLTTBlending && kShadowMode != (uint)SPShadowMode::RayShadows && smLightData.type == (uint)LightTypeSM::Directional){
-                float blendT = saturate((camDist - kLTTBlendingRange.x)/kLTTBlendingRange.y);
-                shadow = lerp(rtShadow, shadow, blendT);
-            }else
-                shadow = rtShadow;
-
             //Handle Debug
             if (is_valid(gDebug))
             {
-                debugOut += handleDebugTex(useRay, shadow < kShadowCutoff, shadow, smLightData, posW, faceNormalW, random);
+                debugOut += handleDebugTex(useRay, shadow < kShadowCutoff, rtShadow, smLightData, posW, faceNormalW, random);
             }
+
+            if (kEnableLTTBlending && kShadowMode != (uint)SPShadowMode::RayShadows && smLightData.type == (uint)LightTypeSM::Directional) {
+                float blendT = saturate((camDist - kLTTBlendingRange.x) / kLTTBlendingRange.y);
+                shadow = lerp(rtShadow, shadow, blendT);
+            } else
+                shadow = rtShadow;
 
             #if SHADOW_ONLY
                 color += float3(shadow / lightCount);
