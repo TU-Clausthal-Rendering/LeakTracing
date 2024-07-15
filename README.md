@@ -3,7 +3,11 @@
 ![](docs/images/TeaserLeakTracing.png)
 
 ## Introduction
-This repository contains the source code and an interactive demo for the soon-to-be-published EGSR paper.
+This repository contains the source code and an interactive demo for [the following EGSR paper:](https://diglib.eg.org/items/d3b40fa5-bbd1-4cf1-8b4f-378e30c9d74f)
+
+> **[Real-Time Pixel-Perfect Hard Shadows with Leak Tracing](https://diglib.eg.org/items/d3b40fa5-bbd1-4cf1-8b4f-378e30c9d74f)**
+> René Kern, Felix Brüll, Thorsten Grosch 
+> TU Clausthal
 
 This prototype implements Leak Tracing, a hybrid algorithm that combines filterable shadow maps with ray tracing to produce pixel-perfect shadows. Selective ray tracing is employed in regions where filterable shadow maps exhibit light leaks or aliasing. No scene-dependent parameters are required, and the algorithm performs exceptionally well on alpha-tested shadows.
 
@@ -18,16 +22,17 @@ Teaser:
 ## Contents:
 
 * [Demo usage](#demo-usage)
+* [Testing with more Scenes](#testing-with-more-scenes)
 * [Additional Videos](#additional-videos)
 * [Falcor Prerequisites](#falcor-prerequisites)
 * [Building Falcor](#building-falcor)
 
 ## Demo usage
-After downloading the demo from the releases page, you can execute it with the LeakTracingDemo[Scenename].bat file. The Bistro and Emerald Square scenes are not included and need to be dowloaded seperatly. After downloading simply put the whole content of the .zip in the respective subfolder of the 'Models' folder (e.g. so that `Models/Bistro/BistroExterior.fbx` exist).
+After downloading the demo from the releases page, you can execute it using the `LeakTracingDemo[SceneName].bat` file. The Bistro and Emerald Square scenes are not included and need to be downloaded separately. After downloading, simply place the entire content of the `.zip` file into the respective subfolder of the `Models` folder (e.g., so that `Models/Bistro/BistroExterior.fbx` exists).
 - Bistro: 		https://developer.nvidia.com/orca/amazon-lumberyard-bistro
 - Emerald Square: 	https://developer.nvidia.com/orca/nvidia-emerald-square
 
-After downloading the demo from the releases page, you can execute it using the `LeakTracingDemo[SceneName].bat` file. The Bistro and Emerald Square scenes are not included and need to be downloaded separately. After downloading, simply place the entire content of the `.zip` file into the respective subfolder of the `Models` folder (e.g., so that `Models/Bistro/BistroExterior.fbx` exists).
+
 
 Controls:
 - `WASD` - Camera movement
@@ -45,6 +50,26 @@ UI:
 How to add the temporal mask as a debug window:
 
 ![](docs/images/GitDebugWindow.png)
+
+## Testing with more Scenes
+Testing with other scenes is possible. The following points should be noted when loading other scenes:
+- Load the `LeakTracing` renderscript:
+    - Using the `.bat` file (`LeakTracingDemo_NoScene.bat`)
+    - Directly in Mogwai with `File->Load Script`. The render pass scripts are in the `scripts` folder (`Data/scripts` in demo).
+- A scene can be loaded in Mogwai with `File->Load Scene`.
+- Leak Tracing supports analytic point, spot and directional lights, although Point lights were sparingly tested. Leak Tracing theoretically supports up to 42 lights, however, anything above 4 lights was not tested and is considered experimental. 
+- The cascaded level points are set automatically depending on the scene bounding box and may need slight manual tweaking (`ShadowMapOptions -> Cascaded Options`).
+
+Falcor supports a variety of scene types:
+- Falcor's `.pyscene` format ([more details](docs/usage/scene-formats.md))
+    - e.g. [NVIDIA ORCA](https://developer.nvidia.com/orca)
+- FBX and GLTF files
+    - GLTF files often have very bright lights that may need to be toned down.
+- Many PBRT V4 files:
+    - e.g. [Benedikt Bitterli's Rendering Resources](https://benedikt-bitterli.me/resources/) or [PBRTv4 scenes repo](https://github.com/mmp/pbrt-v4-scenes)
+    - Does not include analytic lights, which need to be added manually in a `.pyscene`
+
+We may add additional `.pyscenes` in the future.
 
 ## Additional Videos
 
