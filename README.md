@@ -5,8 +5,8 @@
 ## Introduction
 This repository contains the source code and an interactive demo for [the following EGSR paper:](https://diglib.eg.org/items/d3b40fa5-bbd1-4cf1-8b4f-378e30c9d74f)
 
-> **[Real-Time Pixel-Perfect Hard Shadows with Leak Tracing](https://diglib.eg.org/items/d3b40fa5-bbd1-4cf1-8b4f-378e30c9d74f)**
-> René Kern, Felix Brüll, Thorsten Grosch 
+> **[Real-Time Pixel-Perfect Hard Shadows with Leak Tracing](https://diglib.eg.org/items/d3b40fa5-bbd1-4cf1-8b4f-378e30c9d74f)** <br>
+> René Kern, Felix Brüll, Thorsten Grosch <br>
 > TU Clausthal
 
 This prototype implements Leak Tracing, a hybrid algorithm that combines filterable shadow maps with ray tracing to produce pixel-perfect shadows. Selective ray tracing is employed in regions where filterable shadow maps exhibit light leaks or aliasing. No scene-dependent parameters are required, and the algorithm performs exceptionally well on alpha-tested shadows.
